@@ -1,0 +1,23 @@
+<nav class="navbar navbar-dark bg-dark px-3">
+  <span class="navbar-brand mb-0 h1">Student Management</span>
+</nav>
+
+<div class="container mt-3">
+  <ul class="nav nav-tabs mb-3">
+    <li class="nav-item">
+      <a class="nav-link" routerLink="/students" routerLinkActive="active">Students</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" routerLink="/courses" routerLinkActive="active">Courses</a>
+    </li>
+  </ul>
+
+  @if (message$ | async; as message) {
+    <div class="alert alert-danger alert-dismissible">
+      {{ message }}
+      <button type="button" class="btn-close" aria-label="Close" (click)="closeMessage()"></button>
+    </div>
+  }
+
+  <router-outlet />
+</div>

@@ -1,0 +1,39 @@
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h4 class="mb-0">Courses</h4>
+  <a class="btn btn-primary" routerLink="/courses/new">Add course</a>
+</div>
+
+<table class="table table-striped bg-white">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Description</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    @for (course of courses$ | async; track course.id) {
+      <tr>
+        <td>{{ course.name }}</td>
+        <td>{{ course.description || '-' }}</td>
+        <td class="text-end">
+          <a class="btn btn-sm btn-outline-primary me-2" [routerLink]="['/courses', course.id, 'edit']">Edit</a>
+          <button class="btn btn-sm btn-outline-danger" (click)="askToDelete(course)">Delete</button>
+        </td>
+      </tr>
+    } @empty {
+      <tr>
+        <td colspan="3" class="text-center text-muted">No courses yet.</td>
+      </tr>
+    }
+  </tbody>
+</table>
+
+@if (courseToDelete) {
+  <app-confirm-modal
+    title="Delete course"
+    [message]="'Delete ' + courseToDelete.name + '? Students enrolled in it will be removed from the course.'"
+    (confirmed)="confirmDelete()"
+    (cancelled)="cancelDelete()">
+  </app-confirm-modal>
+}
